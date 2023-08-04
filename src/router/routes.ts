@@ -21,6 +21,12 @@ const routes: Array<RouteRecordRaw> = [
         /* webpackChunkName: "registration" */ "../views/RegistrationView.vue"
       ),
   },
+  {
+    path: "/tooltip",
+    name: "Tooltip",
+    component: () =>
+      import(/* webpackChunkName: "landing" */ "../views/TooltipsView.vue"),
+  },
 ];
 
 export default routes;
