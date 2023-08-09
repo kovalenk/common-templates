@@ -1,12 +1,11 @@
 <template lang="pug">
-.tooltip-box
-  span(v-hover="true") {{ textHover }}
+.tooltip-box {{ textHover }}
   .tooltip(:class="tooltipClass")
     span.arrow(:class="arrowClass") {{ text }}
 </template>
 
 <script setup lang="ts">
-import { defineProps } from "vue";
+import { defineProps, ref } from "vue";
 
 const props = defineProps({
   text: {
@@ -28,20 +27,24 @@ const props = defineProps({
 });
 </script>
 
-<style scoped>
+<style>
 .tooltip-box {
-  position: relative;
-  display: block;
   cursor: pointer;
-  span {
-    font-size: 11px;
-  }
+  position: relative;
+  font-size: 11px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
 }
 
 .tooltip-box:hover .tooltip {
   opacity: 1;
 }
+
 .tooltip {
+  font-size: 11px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+
   display: flex;
   align-items: center;
   align-self: center;
@@ -57,21 +60,23 @@ const props = defineProps({
   max-height: 76px;
   height: max-content;
   opacity: 0;
-  transition: opacity 1s;
+  transition: opacity 0.1s;
 
-  position: absolute;
+  position: relative;
 
   background: #fff;
-  box-shadow: 0 0 10px 2px rgba(61, 55, 52, 0.08);
-  z-index: 1;
+  box-shadow: 0 4px 32px 0 rgba(61, 55, 52, 0.08),
+    0 4px 8px 0 rgba(61, 55, 52, 0.08), 0 0 2px 0 rgba(61, 55, 52, 0.16);
   padding: 11px 16px;
+  margin-top: 5px;
 }
 .arrow::before {
   content: " ";
   position: absolute;
+  background: url("../assets/arrow.png");
+  width: 15px;
+  height: 9px;
   margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
   filter: drop-shadow(rgba(0, 0, 0, 0.3) 0 2px 10px);
 }
 </style>

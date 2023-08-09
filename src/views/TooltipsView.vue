@@ -1,8 +1,8 @@
 <template lang="pug">
-div
+.main
   .header 
+  .sidebar
   .block 
-    .sidebar
     .content
       h1 Tooltip
       .block
@@ -52,130 +52,97 @@ div
             tooltipClass="tooltip-down-left",
             textHover="Down, Right"
           )
-        div 
-          tooltips-component.distance(
-            text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been t...",
-            arrowClass="up-left",
-            textHover="Up, Left"
-          )
-          tooltips-component.distance(
-            text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been t...",
-            arrowClass="up-center",
-            textHover="Up, center"
-          )
-          tooltips-component.distance(
-            text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been t...",
-            arrowClass="up-right",
-            textHover="Up, Right"
-          )
-          tooltips-component.distance(
-            text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been t...",
-            arrowClass="center-right",
-            tooltipClass="tooltip-right",
-            textHover="Center, Right"
-          )
-          tooltips-component.distance(
-            text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been t...",
-            arrowClass="center-left",
-            tooltipClass="tooltip-left",
-            textHover="Center, Left"
-          )
-          tooltips-component.distance(
-            text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been t...",
-            arrowClass="down-left",
-            tooltipClass="tooltip-down-left",
-            textHover="Down, Left"
-          )
-          tooltips-component.distance(
-            text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been t...",
-            arrowClass="down-center",
-            tooltipClass="tooltip-down-left",
-            textHover="Down, Center"
-          )
-          tooltips-component.distance(
-            text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been t...",
-            arrowClass="down-right",
-            tooltipClass="tooltip-down-left",
-            textHover="Down, Right"
-          )
 </template>
 
 <script setup lang="ts">
 import TooltipsComponent from "../components/TooltipsComponent.vue";
 </script>
 <style lang="scss">
-.header {
-  background: red;
-  height: 30px;
-  width: 100%;
-}
-.block {
+.main {
   display: flex;
+  flex-wrap: wrap;
+  .header {
+    background: red;
+    height: 30px;
+    width: 100%;
+  }
   .sidebar {
     width: 30%;
     background: blue;
-    height: 100vh;
   }
+}
+
+.block {
+  width: 70%;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
   .content {
-    padding: 20px;
+    height: 200vh;
+    h1 {
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+    }
   }
   .distance {
-    margin: 80px;
+    margin: 80px 80px 0 -8px;
+    // position: absolute;
+    // transform: translate3d(0, 0, 1px);
   }
 }
 
 .tooltip-right {
-  left: -15%;
-  top: 50%;
-  transform: translate(-100%, -50%);
+  transform: translate(-106%, -105%);
 }
 .tooltip-left {
-  left: 100%;
-  top: 50%;
-  transform: translate(-2%, -50%);
+  left: 34%;
+  top: 62%;
+  transform: translate(-6%, -89%);
 }
 .up-left::before {
-  top: -10px;
+  top: -7px;
   left: 16px;
   border-color: transparent transparent #fff transparent;
 }
 .up-center::before {
-  top: -10px;
+  top: -7px;
   left: 50%;
   transform: translateX(-50%);
   border-color: transparent transparent #fff transparent;
 }
 .up-right::before {
-  top: -10px;
-  left: calc(100% - 15px);
+  top: -7px;
+  left: calc(100% - 20px);
   border-color: transparent transparent #fff transparent;
 }
 .center-right::before {
+  transform: rotate(90deg);
   top: 40%;
-  left: calc(100% - -5px);
+  left: calc(100%);
   border-color: transparent transparent transparent #fff;
 }
 .center-left::before {
   top: 40%;
-  left: calc(100% - 102%);
+  left: calc(-3%);
+  transform: rotate(270deg);
   border-color: transparent #fff transparent transparent;
 }
 .tooltip-down-left {
   transform: translate(-33%, -156%);
 }
 .down-left::before {
-  top: 100%;
+  top: 98%;
+  transform: rotate(180deg);
   left: 10%;
-  border-color: #fff transparent transparent transparent;
 }
 .down-center::before {
-  top: 100%;
+  top: 98%;
   left: 50%;
-  border-color: #fff transparent transparent transparent;
+  transform: rotate(180deg);
 }
 .down-right::before {
-  top: 100%;
+  top: 98%;
   left: 90%;
-  border-color: #fff transparent transparent transparent;
+  transform: rotate(180deg);
 }
 </style>
