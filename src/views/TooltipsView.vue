@@ -97,6 +97,9 @@ const downRight = ref(false);
   overflow-y: auto;
   p {
     margin: 80px 20px;
+    cursor: pointer;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
   }
   .content {
     height: 200vh;
