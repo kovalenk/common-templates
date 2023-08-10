@@ -1,7 +1,6 @@
 <template lang="pug">
-.tooltip-box {{ textHover }}
-  .tooltip(:class="tooltipClass")
-    span.arrow(:class="arrowClass") {{ text }}
+.tooltip
+  span.arrow(:class="arrowClass") {{ text }}
 </template>
 
 <script setup lang="ts">
@@ -12,15 +11,7 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  textHover: {
-    type: String,
-    required: true,
-  },
   arrowClass: {
-    type: String,
-    default: "",
-  },
-  tooltipClass: {
     type: String,
     default: "",
   },
@@ -28,18 +19,6 @@ const props = defineProps({
 </script>
 
 <style>
-.tooltip-box {
-  cursor: pointer;
-  position: relative;
-  font-size: 11px;
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
-}
-
-.tooltip-box:hover .tooltip {
-  opacity: 1;
-}
-
 .tooltip {
   font-size: 11px;
   font-family: "Inter", sans-serif;
@@ -59,7 +38,7 @@ const props = defineProps({
   min-height: 18px;
   max-height: 76px;
   height: max-content;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.1s;
 
   position: relative;
