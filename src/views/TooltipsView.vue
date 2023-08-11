@@ -5,53 +5,44 @@
   .block 
     .content
       h1 Tooltip
-      tooltips-component(arrowClass="up-left", tooltipClass="up-left-block")
+      tooltips-component
         template(v-slot:action) Up, Left
-        template(v-slot:content) Up, Left
-      tooltips-component(
-        arrowClass="up-center",
-        tooltipClass="up-center-block"
-      )
+        template(v-slot:content) 
+          .tooltip.up-left-block.up-left Up, Left
+      tooltips-component
         template(#action) Up, Center
-        template(v-slot:content) Up, Center
-      tooltips-component(arrowClass="up-right", tooltipClass="up-right-block")
+        template(v-slot:content) 
+          .tooltip.up-center-block.up-center Up, Center
+      tooltips-component
         template(v-slot:action) Up, Right
-        template(v-slot:content) Up, Right
-      tooltips-component(
-        arrowClass="center-right",
-        tooltipClass="center-right-block"
-      )
+        template(v-slot:content) 
+          .tooltip.up-right.up-right-block Up, Right
+      tooltips-component
         template(v-slot:action) Center, Right
-        template(v-slot:content) Center, Right
-      tooltips-component(
-        arrowClass="center-left",
-        tooltipClass="center-left-block"
-      )
+        template(v-slot:content) 
+          .tooltip.center-right.center-right-block Center, Right
+      tooltips-component
         template(v-slot:action) Center, Left
-        template(v-slot:content) Center, Left
-      tooltips-component(
-        arrowClass="down-left",
-        tooltipClass="down-left-block"
-      )
+        template(v-slot:content) 
+          .tooltip.center-left.center-left-block Center, Left
+      tooltips-component
         template(v-slot:action) Down, Left
-        template(v-slot:content) Down, Left
-      tooltips-component(
-        arrowClass="down-center",
-        tooltipClass="down-center-block"
-      )
+        template(v-slot:content) 
+          .tooltip.down-left.down-left-block Down, Left
+      tooltips-component
         template(v-slot:action) Down, Center
-        template(v-slot:content) Down, Center
-      tooltips-component(
-        arrowClass="down-right",
-        tooltipClass="down-right-block"
-      )
+        template(v-slot:content) 
+          .tooltip.down-center.down-center-block Down, Center
+      tooltips-component
         template(v-slot:action) Down, Right
-        template(v-slot:content) Down, Right
+        template(v-slot:content) 
+          .tooltip.down-right.down-right-block Down, Right
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import TooltipsComponent from "../components/TooltipsComponent.vue";
+const visibility = ref(false);
 </script>
 <style lang="scss">
 .main {

@@ -4,24 +4,12 @@
     .action(@mouseover="visibility = true", @mouseout="visibility = false")
       slot(name="action")
     teleport(to="body")
-      .tooltip(v-if="visibility", :class="tooltipClass")
-        span.arrow(:class="arrowClass")
-        slot(name="content")
+      slot(name="content", v-if="visibility")
 </template>
 
 <script setup lang="ts">
 import { ref, defineProps } from "vue";
 const visibility = ref(false);
-const props = defineProps({
-  arrowClass: {
-    type: String,
-    default: "",
-  },
-  tooltipClass: {
-    type: String,
-    default: "",
-  },
-});
 </script>
 
 <style>
@@ -61,14 +49,14 @@ const props = defineProps({
     0 4px 8px 0 rgba(61, 55, 52, 0.08), 0 0 2px 0 rgba(61, 55, 52, 0.16);
   padding: 11px 16px;
   margin-top: 5px;
-}
-.arrow::before {
-  content: " ";
-  position: absolute;
-  background: url("../assets/arrow.png");
-  width: 15px;
-  height: 9px;
-  margin-left: -5px;
-  filter: drop-shadow(rgba(0, 0, 0, 0.3) 0 2px 10px);
+  &::before {
+    content: " ";
+    position: absolute;
+    background: url("../assets/arrow.png");
+    width: 15px;
+    height: 9px;
+    margin-left: -5px;
+    filter: drop-shadow(rgba(0, 0, 0, 0.3) 0 2px 10px);
+  }
 }
 </style>
