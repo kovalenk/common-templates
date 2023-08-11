@@ -5,76 +5,53 @@
   .block 
     .content
       h1 Tooltip
-      .block
-        p(@mouseover="upLeft = true", @mouseout="upLeft = false") p, Left
-        Teleport(to="body")
-          tooltips-component.up-left-block(
-            v-if="upLeft",
-            text="Up, Left",
-            arrowClass="up-left"
-          )
-        p(@mouseover="upCenter = true", @mouseout="upCenter = false") Up, Center
-        Teleport(to="body")
-          tooltips-component.up-center-block(
-            v-if="upCenter",
-            text="Up, Center",
-            arrowClass="up-center"
-          )
-        p(@mouseover="upRight = true", @mouseout="upRight = false") Up, Right
-        Teleport(to="body")
-          tooltips-component.up-right-block(
-            v-if="upRight",
-            text="Up, Right",
-            arrowClass="up-right"
-          )
-        p(@mouseover="centerRight = true", @mouseout="centerRight = false") Center, Right
-        Teleport(to="body")
-          tooltips-component.center-right-block(
-            v-if="centerRight",
-            text="Center, Right",
-            arrowClass="center-right"
-          )
-        p(@mouseover="centerLeft = true", @mouseout="centerLeft = false") Center, Left
-        Teleport(to="body")
-          tooltips-component.center-left-block(
-            v-if="centerLeft",
-            text="Center, Left",
-            arrowClass="center-left"
-          )
-        p(@mouseover="downLeft = true", @mouseout="downLeft = false") Down, Left
-        Teleport(to="body")
-          tooltips-component.down-left-block(
-            v-if="downLeft",
-            text="Down, Left",
-            arrowClass="down-left"
-          )
-        p(@mouseover="downCenter = true", @mouseout="downCenter = false") Down, Center
-        Teleport(to="body")
-          tooltips-component.down-center-block(
-            v-if="downCenter",
-            text="Down, Center",
-            arrowClass="down-center"
-          )
-        p(@mouseover="downRight = true", @mouseout="downRight = false") Down, Right
-        Teleport(to="body")
-          tooltips-component.down-right-block(
-            v-if="downRight",
-            text="Down, Right",
-            arrowClass="down-right"
-          )
+      tooltips-component(arrowClass="up-left", tooltipClass="up-left-block")
+        template(v-slot:action) Up, Left
+        template(v-slot:content) Up, Left
+      tooltips-component(
+        arrowClass="up-center",
+        tooltipClass="up-center-block"
+      )
+        template(#action) Up, Center
+        template(v-slot:content) Up, Center
+      tooltips-component(arrowClass="up-right", tooltipClass="up-right-block")
+        template(v-slot:action) Up, Right
+        template(v-slot:content) Up, Right
+      tooltips-component(
+        arrowClass="center-right",
+        tooltipClass="center-right-block"
+      )
+        template(v-slot:action) Center, Right
+        template(v-slot:content) Center, Right
+      tooltips-component(
+        arrowClass="center-left",
+        tooltipClass="center-left-block"
+      )
+        template(v-slot:action) Center, Left
+        template(v-slot:content) Center, Left
+      tooltips-component(
+        arrowClass="down-left",
+        tooltipClass="down-left-block"
+      )
+        template(v-slot:action) Down, Left
+        template(v-slot:content) Down, Left
+      tooltips-component(
+        arrowClass="down-center",
+        tooltipClass="down-center-block"
+      )
+        template(v-slot:action) Down, Center
+        template(v-slot:content) Down, Center
+      tooltips-component(
+        arrowClass="down-right",
+        tooltipClass="down-right-block"
+      )
+        template(v-slot:action) Down, Right
+        template(v-slot:content) Down, Right
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import TooltipsComponent from "../components/TooltipsComponent.vue";
-const upLeft = ref(false);
-const upCenter = ref(false);
-const upRight = ref(false);
-const centerRight = ref(false);
-const centerLeft = ref(false);
-const downLeft = ref(false);
-const downCenter = ref(false);
-const downRight = ref(false);
 </script>
 <style lang="scss">
 .main {
@@ -117,43 +94,43 @@ const downRight = ref(false);
 }
 .up-center-block {
   position: absolute;
-  transform: translate3d(340px, 310px, 0px);
+  transform: translate3d(340px, 290px, 0px);
   top: 0px;
   left: 0px;
 }
 .up-right-block {
   position: absolute;
-  transform: translate3d(280px, 410px, 0px);
+  transform: translate3d(280px, 390px, 0px);
   top: 0px;
   left: 0px;
 }
 .center-right-block {
   position: absolute;
-  transform: translate3d(200px, 469px, 0px);
+  transform: translate3d(200px, 450px, 0px);
   top: 0px;
   left: 0px;
 }
 .center-left-block {
   position: absolute;
-  transform: translate3d(470px, 569px, 0px);
+  transform: translate3d(475px, 545px, 0px);
   top: 0px;
   left: 0px;
 }
 .down-left-block {
   position: absolute;
-  transform: translate3d(370px, 620px, 0px);
+  transform: translate3d(370px, 600px, 0px);
   top: 0px;
   left: 0px;
 }
 .down-center-block {
   position: absolute;
-  transform: translate3d(350px, 725px, 0px);
+  transform: translate3d(350px, 690px, 0px);
   top: 0px;
   left: 0px;
 }
 .down-right-block {
   position: absolute;
-  transform: translate3d(300px, 823px, 0px);
+  transform: translate3d(300px, 790px, 0px);
   top: 0px;
   left: 0px;
 }

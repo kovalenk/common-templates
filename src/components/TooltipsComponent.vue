@@ -1,17 +1,23 @@
 <template lang="pug">
-.tooltip
-  span.arrow(:class="arrowClass") {{ text }}
+.tooltips 
+  .tooltip-section
+    .action(@mouseover="visibility = true", @mouseout="visibility = false")
+      slot(name="action")
+    teleport(to="body")
+      .tooltip(v-if="visibility", :class="tooltipClass")
+        span.arrow(:class="arrowClass")
+        slot(name="content")
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from "vue";
-
+import { ref, defineProps } from "vue";
+const visibility = ref(false);
 const props = defineProps({
-  text: {
-    type: String,
-    required: true,
-  },
   arrowClass: {
+    type: String,
+    default: "",
+  },
+  tooltipClass: {
     type: String,
     default: "",
   },
@@ -19,6 +25,13 @@ const props = defineProps({
 </script>
 
 <style>
+.action {
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  margin: 80px 20px;
+  cursor: pointer;
+}
 .tooltip {
   font-size: 11px;
   font-family: "Inter", sans-serif;
