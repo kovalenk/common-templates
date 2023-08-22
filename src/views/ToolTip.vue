@@ -4,8 +4,8 @@ import CustomToolTip from "@/components/CustomToolTip.vue";
 
 <template lang="pug">
 #table-section.table-section
-  .table-item(v-for="item in 30")
-    custom-tool-tip.left-top
+  .table-item(v-for="item in 40")
+    custom-tool-tip.left-top(:is-click="true")
       template(v-slot:item="")
         .table-item--name In publishing and graphic design, Lorem ipsum {{ item }}
       template(v-slot:content="")

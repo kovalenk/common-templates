@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { computed, ref, defineProps } from "vue";
+import {
+  computed,
+  ref,
+  defineProps,
+  watch,
+  onMounted,
+  onBeforeUnmount,
+} from "vue";
 
 const props = defineProps({
   width: {
@@ -9,6 +16,10 @@ const props = defineProps({
   parentTagName: {
     type: String,
     default: "body",
+  },
+  isClick: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -37,6 +48,12 @@ enum coord {
   Left = "left",
   Right = "right",
   Center = "center",
+}
+
+enum events {
+  click = "click",
+  mouseover = "mouseover",
+  mouseleave = "mouseleave",
 }
 
 const arrowPosition = ref("");
@@ -302,14 +319,54 @@ const customStyles = computed(() => {
   return `width: ${props.width}px`;
 });
 
+const observer = new IntersectionObserver(
+  function (entries) {
+    if (!entries[0].isIntersecting) close();
+  },
+  { threshold: [0] }
+);
+onMounted(() => {
+  observer.observe(refToolTip.value);
+});
+onBeforeUnmount(() => {
+  observer.unobserve(refToolTip.value);
+});
 const isShowed = ref(false);
+
+const openPopup = (event: MouseEvent) => {
+  if (
+    (props.isClick && event.type === events.click) ||
+    (!props.isClick && event.type === events.mouseover)
+  ) {
+    if (isShowed.value === true && props.isClick) {
+      close();
+    } else {
+      open();
+    }
+  }
+};
+const closePopup = (event: MouseEvent) => {
+  if (
+    (props.isClick && event.type === events.click) ||
+    (!props.isClick && event.type === events.mouseleave)
+  ) {
+    close();
+  }
+};
+const open = () => {
+  isShowed.value = true;
+};
+const close = () => {
+  isShowed.value = false;
+};
 </script>
 
 <template lang="pug">
 .tooltip(ref="refToolTip")
   .tooltip--hover-item(
-    @mouseover="isShowed = true",
-    @mouseleave="isShowed = false"
+    @click="openPopup($event)",
+    @mouseover="openPopup($event)",
+    @mouseleave="closePopup($event)"
   )
     slot(name="item")
   teleport(:to="parentTagName")
@@ -317,10 +374,10 @@ const isShowed = ref(false);
     .tooltip--info(
       ref="userContent",
       :style="customStyles",
-      @mouseleave="isShowed = false"
+      @mouseleave="closePopup($event)"
     )
       .tooltip--info-arrow(
-        @mouseover="isShowed = true",
+        @mouseover="openPopup($event)",
         :class="arrowPosition"
       )
       slot(name="content")
