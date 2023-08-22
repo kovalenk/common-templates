@@ -1,9 +1,90 @@
 @import "normalize";
 
 html, body, #app {
-  height: 100%;
+  height: max-content;
 }
 
 body.no-scroll {
   overflow: hidden;
+}
+
+.tooltip--info-arrow {
+  &.bottom {
+    &-left {
+      left: 10%;
+      top: 100%;
+      transform: translateX(-50%);
+    }
+    &-center {
+      left: 50%;
+      top: 100%;
+      transform: translateX(-50%);
+    }
+    &-right {
+      left: 90%;
+      top: 100%;
+      transform: translateX(-50%);
+    }
+  }
+  &.top {
+    &-left {
+      left: 10%;
+      top: -25px;
+      transform: translateX(-50%) rotate(180deg);
+    }
+    &-center {
+      left: 50%;
+      top: -25px;
+      transform: translateX(-50%) rotate(180deg);
+    }
+    &-right {
+      left: 90%;
+      top: -25px;
+      transform: translateX(-50%) rotate(180deg);
+    }
+  }
+  &.left {
+    &-top {
+      top: 10%;
+      bottom: initial;
+      right: initial;
+      left: calc(100% + 12px);
+      transform: translateX(-50%) rotate(-90deg);
+    }
+    &-center {
+      top: calc(50% - 12px);
+      bottom: initial;
+      right: initial;
+      left: calc(100% + 12px);
+      transform: translateX(-50%) rotate(-90deg);
+    }
+    &-bottom {
+      bottom: 12px;
+      right: initial;
+      left: calc(100% + 12px);
+      transform: translateX(-50%) rotate(-90deg);
+    }
+  }
+  &.right {
+    &-top {
+      top: 10%;
+      bottom: initial;
+      right: initial;
+      left: -12px;
+      transform: translateX(-50%) rotate(90deg);
+    }
+    &-center {
+      top: calc(50% - 12px);
+      bottom: initial;
+      right: initial;
+      left: -12px;
+      transform: translateX(-50%) rotate(90deg);
+    }
+    &-bottom {
+      bottom: 12px;
+      right: initial;
+      left: -12px;
+      transform: translateX(-50%) rotate(90deg);
+    }
+  }
 }
