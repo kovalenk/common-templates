@@ -1,16 +1,27 @@
 <template lang="pug">
-label.custom--input(:class="{ error: isError, disabled: isDisabled }")
-  span.custom--input--name Heading
+.custom--input(:class="{ error: isError, disabled: isDisabled }")
+  label(:for="id")
+    span.custom--input--name {{ name }}
   .custom--input--field(:class="{ prefix: isPrefix, suffix: isSuffix }")
-    slot(name="prefix")
-    input(placeholder="Placeholder", :disabled="isDisabled")
-    slot(name="suffix")
+    .prefix(v-if="isPrefix")
+      slot(name="prefix")
+    input(
+      :id="id",
+      :placeholder="placeholder",
+      :name="name",
+      :disabled="isDisabled"
+    )
+    .suffix(v-if="isSuffix")
+      slot(name="suffix")
   .custom--input--errors(v-if="isError")
     slot(name="errors")
 </template>
 
 <script setup lang="ts">
-import { defineProps } from "vue";
+import { defineProps, ref } from "vue";
+import { uuid } from "vue-uuid";
+
+const id = ref(uuid.v4());
 
 const props = defineProps({
   isError: {
@@ -28,6 +39,14 @@ const props = defineProps({
   isDisabled: {
     type: Boolean,
     default: () => false,
+  },
+  name: {
+    type: String,
+    default: () => "",
+  },
+  placeholder: {
+    type: String,
+    default: () => "",
   },
 });
 </script>
@@ -51,6 +70,7 @@ const props = defineProps({
     padding: 0;
   }
   &--field {
+    position: relative;
     box-sizing: border-box;
     min-height: 52px;
     height: 52px;
@@ -58,13 +78,42 @@ const props = defineProps({
 
     overflow: hidden;
 
+    &.suffix {
+      input {
+        padding-right: 42px;
+      }
+    }
+    &.prefix {
+      input {
+        padding-left: 42px;
+      }
+    }
+
+    .suffix,
+    .prefix {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      min-height: 16px;
+      min-width: 16px;
+      background: black;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .prefix {
+      left: 18px;
+    }
+    .suffix {
+      right: 18px;
+    }
+
     input {
       display: flex;
       align-items: center;
       box-sizing: border-box;
       width: 100%;
       height: 100%;
-      padding: 0;
+      padding: 0 16px;
 
       border: var(--input-border-default);
       border-radius: 8px;
