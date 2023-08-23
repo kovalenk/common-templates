@@ -38,9 +38,8 @@
   }
   &-content {
     padding: 30px 40px;
+    min-height: calc(100vh - 123px);
   }
 }
 </style>
-<script setup lang="ts">
-import TextField from "@/views/TextField.vue";
-</script>
+<script setup lang="ts"></script>

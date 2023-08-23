@@ -8,6 +8,14 @@ body.no-scroll {
   overflow: hidden;
 }
 
+input {
+  border: none;
+  padding: 0;
+  &:focus-visible {
+    outline: none;
+  }
+}
+
 .tooltip--info-arrow {
   &.bottom {
     &-left {
