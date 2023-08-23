@@ -9,7 +9,8 @@
       :id="id",
       :placeholder="placeholder",
       :name="name",
-      :disabled="isDisabled"
+      :disabled="isDisabled",
+      v-model="input"
     )
     .suffix(v-if="isSuffix")
       slot(name="suffix")
@@ -18,10 +19,14 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from "vue";
+import { defineProps, ref, defineEmits, watch } from "vue";
 import { uuid } from "vue-uuid";
 
 const id = ref(uuid.v4());
+
+const emit = defineEmits<{
+  (e: "input", value: string | number): void;
+}>();
 
 const props = defineProps({
   isError: {
@@ -48,6 +53,16 @@ const props = defineProps({
     type: String,
     default: () => "",
   },
+  value: {
+    default: () => "",
+    required: true,
+  },
+});
+
+const input = ref("");
+
+watch(input, () => {
+  emit("input", input.value);
 });
 </script>
 
@@ -57,6 +72,8 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  width: 100%;
 
   font-family: inherit;
   background: transparent;
@@ -152,6 +169,23 @@ const props = defineProps({
           border: var(--input-border-default);
         }
       }
+    }
+  }
+  &.error {
+    .custom--input--field {
+      input {
+        border-color: var(--red);
+      }
+
+      &:focus,
+      &:active,
+      &:hover {
+        outline: none;
+        border: var(--red);
+      }
+    }
+    .custom--input--errors {
+      color: var(--red);
     }
   }
 }
