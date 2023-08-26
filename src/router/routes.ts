@@ -3,23 +3,30 @@ import { RouteRecordRaw } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    name: "Landing",
+    name: "Main",
+    redirect: "/tooltip",
     component: () =>
-      import(/* webpackChunkName: "landing" */ "../views/LandingView.vue"),
-  },
-  {
-    path: "/login",
-    name: "Login",
-    component: () =>
-      import(/* webpackChunkName: "login" */ "../views/LoginView.vue"),
-  },
-  {
-    path: "/registration",
-    name: "Registration",
-    component: () =>
-      import(
-        /* webpackChunkName: "registration" */ "../views/RegistrationView.vue"
-      ),
+      import(/* webpackChunkName: "Main" */ "@/layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "/tooltip",
+        name: "ToolTip",
+        component: () =>
+          import(/* webpackChunkName: "ToolTip" */ "../views/ToolTip.vue"),
+      },
+      {
+        path: "/dropdown",
+        name: "Dropdown",
+        component: () =>
+          import(/* webpackChunkName: "DropDown" */ "../views/DropDown.vue"),
+      },
+      {
+        path: "/modal",
+        name: "Modal",
+        component: () =>
+          import(/* webpackChunkName: "ModalPage" */ "../views/ModalPage.vue"),
+      },
+    ],
   },
 ];
 
