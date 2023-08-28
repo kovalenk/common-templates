@@ -1,6 +1,6 @@
 <template lang="pug">
 #table-section.table-section
-  .table-item(v-for="item in items")
+  .table-item(v-for="item in items") 
     custom-tool-tip(:is-click="true", :class="[item.class]")
       template(v-slot:item="")
         label.table-item--content.label-inter {{ item.label }}
