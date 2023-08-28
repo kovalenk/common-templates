@@ -1,9 +1,11 @@
 <template lang="pug">
 #table-section.table-section
   .table-item(v-for="item in items") 
-    custom-tool-tip(:is-click="true", :class="[item.class]")
+    custom-tool-tip(:class="[item.class]", :is-click="true")
       template(v-slot:item="")
-        label.table-item--content.label-inter {{ item.label }}
+        .table-item--content
+          i.icon.icon-search
+            label.label-inter {{ item.label }}
       template(v-slot:content="")
         .table-item--name.label-inter {{ " In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available." }}
 </template>
@@ -83,16 +85,15 @@ const items = [
       white-space: wrap;
     }
     &--content {
-      font-size: 18px;
-      color: black;
       display: flex;
-      &::before {
-        content: "";
-        display: block;
+      align-items: center;
+      i.icon.icon-search {
         width: 16px;
         height: 16px;
         background: url("../assets/Info.svg");
-        margin-right: 5px;
+        label {
+          margin-left: 20px;
+        }
       }
     }
   }
