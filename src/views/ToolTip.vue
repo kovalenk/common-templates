@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import CustomToolTip from "@/components/CustomToolTip.vue";
-</script>
-
 <template lang="pug">
 #table-section.table-section
   .table-item(v-for="item in 40")
@@ -12,13 +8,20 @@ import CustomToolTip from "@/components/CustomToolTip.vue";
         .table-item--name {{ item }}.{{ " In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available." }}
 </template>
 
+<script setup lang="ts">
+import CustomToolTip from "@/components/CustomToolTip.vue";
+</script>
+
 <style scoped lang="scss">
 .table {
   &-section {
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    padding: 30px 0;
   }
+
   &-item {
     display: flex;
     justify-content: center;

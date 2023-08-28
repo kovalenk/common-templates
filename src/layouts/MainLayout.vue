@@ -1,18 +1,24 @@
 <template lang="pug">
-transition(name="fade", mode="out-in")
-  router-view
+.all-content
+  page-sidebar
+  .right-content
+    router-view
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import PageSidebar from "@/components/PageSidebar.vue";
+</script>
 
 <style lang="scss" scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.1s;
-}
+.all-content {
+  display: flex;
+  height: 100%;
+  background-color: var(--grey-background);
 
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
+  .right-content {
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+  }
 }
 </style>

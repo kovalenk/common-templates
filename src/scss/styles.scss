@@ -1,11 +1,26 @@
-@import "normalize";
+@import "core/_normalize";
+@import "core/_reset";
+@import "core/_fonts";
+@import "core/_media";
 
 html, body, #app {
   height: max-content;
+  overflow: hidden;
 }
 
 body.no-scroll {
   overflow: hidden;
+}
+
+.label-inter {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0;
+  white-space: nowrap;
+
+  color: var(--black);
 }
 
 input {
