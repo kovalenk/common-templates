@@ -51,7 +51,6 @@ const actionDropDown = () => {
 };
 
 const dropDownStyles = computed(() => {
-  console.log(commonTextField);
   let styles = {
     visibility: !isOpenDropDown.value ? "hidden" : "inherit",
     top: "",

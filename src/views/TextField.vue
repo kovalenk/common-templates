@@ -43,8 +43,6 @@ const $v = useVuelidate(rules, validationData.value, {
   $lazy: true,
   $autoDirty: true,
 });
-
-console.log($v.value);
 </script>
 
 <template lang="pug">

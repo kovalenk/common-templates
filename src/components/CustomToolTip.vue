@@ -174,7 +174,6 @@ const customStyles = computed(() => {
           ) {
             positionsObject[key1] =
               refToolTip.value.offsetLeft - userContent.value.clientWidth - 15;
-            console.log(1);
           } else if (
             parent.clientWidth >=
               parent.clientWidth -
@@ -187,7 +186,6 @@ const customStyles = computed(() => {
                 userContent.value.clientWidth +
                 15
           ) {
-            console.log(2);
             // eslint-disable-next-line vue/no-side-effects-in-computed-properties
             arrowPosition.value = `${coord.Right}-${key2}`;
             positionsObject[coord.Left] =
@@ -201,7 +199,6 @@ const customStyles = computed(() => {
               refToolTip.value.offsetTop - headerHeight >=
               userContent.value.clientHeight + 15
             ) {
-              console.log(3);
               positionsObject[key1] =
                 refToolTip.value.offsetTop -
                 userContent.value.clientHeight -
@@ -209,7 +206,6 @@ const customStyles = computed(() => {
               // eslint-disable-next-line vue/no-side-effects-in-computed-properties
               arrowPosition.value = `${coord.Bottom}-${key2}`;
             } else {
-              console.log(4);
               positionsObject[key1] =
                 refToolTip.value.offsetTop + refToolTip.value.clientHeight + 15;
               // eslint-disable-next-line vue/no-side-effects-in-computed-properties
