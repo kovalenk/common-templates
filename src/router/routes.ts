@@ -26,6 +26,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () =>
           import(/* webpackChunkName: "ModalPage" */ "../views/ModalPage.vue"),
       },
+      {
+        path: "/text-field",
+        name: "TextField",
+        component: () =>
+          import(/* webpackChunkName: "ModalPage" */ "../views/TextField.vue"),
+      },
     ],
   },
 ];

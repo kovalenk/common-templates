@@ -48,65 +48,82 @@ console.log($v.value);
 </script>
 
 <template lang="pug">
-.form
-  CustomTextField(
-    :use-error="true",
-    :validation="$v.firstName.required.$invalid"
-  )
-    template(v-slot:label="") First name
-    template(v-slot:before="")
-      .test-color
-    template(v-slot:main="")
-      input(v-model="validationData.firstName", :placeholder="'Placeholder'")
-    template(v-slot:error="")
-      p(v-if="$v.firstName.required.$invalid") Field is required
-  CustomTextField(
-    :use-error="true",
-    :validation="$v.lastName.required.$invalid"
-  )
-    template(v-slot:label="") Last name
-    template(v-slot:before="")
-      .test-color
-    template(v-slot:main="")
-      input(v-model="validationData.lastName", :placeholder="'Placeholder'")
-    template(v-slot:error="")
-      p(v-if="$v.lastName.required.$invalid") Field is required
-  CustomTextField(
-    :use-error="true",
-    :validation="$v.email.required.$invalid || $v.email.email.$invalid",
-    :is-disabled="true"
-  )
-    template(v-slot:label="") Email
-    template(v-slot:before="")
-      .test-color
-    template(v-slot:main="")
-      input(
-        v-model="validationData.email",
-        :placeholder="'Placeholder'",
-        disabled="true"
-      )
-    template(v-slot:error="")
-      p(v-if="$v.email.required.$invalid") Field is required
-      p(v-else-if="$v.email.email.$invalid") Invalid email
-  CustomTextField(:use-drop-down="true")
-    template(v-slot:label="") DropDown
-    template(v-slot:before="")
-      custom-checkbox(@update:check="validationData.checked = $event")
-    template(v-slot:main="")
-      .selected-item {{ validationData.selectedItem }}
-    template(v-slot:dropdown="")
-      .drop-down
-        .drop-down--table
-          .drop-down--table-scroll
-            .drop-down--item(
-              v-for="item in items",
-              @click="validationData.selectedItem = item"
-            ) {{ item }}
+.main-page
+  .form
+    CustomTextField(
+      :use-error="true",
+      :validation="$v.firstName.required.$invalid"
+    )
+      template(v-slot:label="") First name
+      template(v-slot:before="")
+        .test-color
+      template(v-slot:main="")
+        input(v-model="validationData.firstName", :placeholder="'Placeholder'")
+      template(v-slot:error="")
+        p(v-if="$v.firstName.required.$invalid") Field is required
+    CustomTextField(
+      :use-error="true",
+      :validation="$v.lastName.required.$invalid"
+    )
+      template(v-slot:label="") Last name
+      template(v-slot:before="")
+        .test-color
+      template(v-slot:main="")
+        input(v-model="validationData.lastName", :placeholder="'Placeholder'")
+      template(v-slot:error="")
+        p(v-if="$v.lastName.required.$invalid") Field is required
+    CustomTextField(
+      :use-error="true",
+      :validation="$v.email.required.$invalid || $v.email.email.$invalid",
+      :is-disabled="true"
+    )
+      template(v-slot:label="") Email
+      template(v-slot:before="")
+        .test-color
+      template(v-slot:main="")
+        input(
+          v-model="validationData.email",
+          :placeholder="'Placeholder'",
+          disabled="true"
+        )
+      template(v-slot:error="")
+        p(v-if="$v.email.required.$invalid") Field is required
+        p(v-else-if="$v.email.email.$invalid") Invalid email
+    CustomTextField(:use-drop-down="true")
+      template(v-slot:label="") DropDown
+      template(v-slot:before="")
+        custom-checkbox(@update:check="validationData.checked = $event")
+      template(v-slot:main="")
+        .selected-item {{ validationData.selectedItem }}
+      template(v-slot:dropdown="")
+        .drop-down
+          .drop-down--table
+            .drop-down--table-scroll
+              .drop-down--item(
+                v-for="item in items",
+                @click="validationData.selectedItem = item"
+              ) {{ item }}
 </template>
 
 <style scoped lang="scss">
-.form {
+.main-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   height: 100%;
+  .form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 50px 40px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0px 4px 32px 0px rgba(61, 55, 52, 0.08),
+      0px 4px 8px 0px rgba(61, 55, 52, 0.08),
+      0px 0px 2px 0px rgba(61, 55, 52, 0.16);
+  }
   .text-field {
     .test-color {
       min-width: 16px;
