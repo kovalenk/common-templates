@@ -7,3 +7,14 @@ html, body, #app {
 body.no-scroll {
   overflow: hidden;
 }
+
+.form-group {
+  span {
+    display: none;
+  }
+  &.error {
+    span {
+      display: block;
+    }
+  }
+}
