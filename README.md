@@ -5,6 +5,11 @@
 yarn install
 ```
 
+### Start Storybook
+```
+yarn storybook
+```
+
 ### Compiles and hot-reloads for development
 ```
 yarn serve
