@@ -1,0 +1,112 @@
+.custom-tooltip {
+  position: absolute;
+  display: flex;
+  z-index: 99999;
+  border-radius: 8px;
+  padding: 11px 16px;
+  max-width: 300px;
+  width: 100%;
+  background: var(--grey-white, #fff);
+  box-shadow: 0px 4px 32px 0px rgba(61, 55, 52, 0.08),
+  0px 4px 8px 0px rgba(61, 55, 52, 0.08),
+  0px 0px 2px 0px rgba(61, 55, 52, 0.16);
+
+  &--arrow {
+    width: 50px;
+    height: 25px;
+    position: absolute;
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: white;
+      transform: translateX(-50%) translateY(-50%) rotate(45deg);
+      top: 0;
+      left: 50%;
+      box-shadow: 0px 4px 32px 0px rgba(61, 55, 52, 0.08),
+      0px 4px 8px 0px rgba(61, 55, 52, 0.08),
+      0px 0px 2px 0px rgba(61, 55, 52, 0.16);
+    }
+    &.top {
+      &-left {
+        left: 10%;
+        top: 100%;
+        transform: translateX(-50%);
+      }
+      &-center {
+        left: 50%;
+        top: 100%;
+        transform: translateX(-50%);
+      }
+      &-right {
+        left: 90%;
+        top: 100%;
+        transform: translateX(-50%);
+      }
+    }
+    &.bottom {
+      &-left {
+        left: 10%;
+        top: -25px;
+        transform: translateX(-50%) rotate(180deg);
+      }
+      &-center {
+        left: 50%;
+        top: -25px;
+        transform: translateX(-50%) rotate(180deg);
+      }
+      &-right {
+        left: 90%;
+        top: -25px;
+        transform: translateX(-50%) rotate(180deg);
+      }
+    }
+    &.left {
+      &-top {
+        top: 10%;
+        bottom: initial;
+        right: initial;
+        left: calc(100% + 12px);
+        transform: translateX(-50%) rotate(-90deg);
+      }
+      &-center {
+        top: calc(50% - 12px);
+        bottom: initial;
+        right: initial;
+        left: calc(100% + 12px);
+        transform: translateX(-50%) rotate(-90deg);
+      }
+      &-bottom {
+        bottom: 12px;
+        right: initial;
+        left: calc(100% + 12px);
+        transform: translateX(-50%) rotate(-90deg);
+      }
+    }
+    &.right {
+      &-top {
+        top: 10%;
+        bottom: initial;
+        right: initial;
+        left: -12px;
+        transform: translateX(-50%) rotate(90deg);
+      }
+      &-center {
+        top: calc(50% - 12px);
+        bottom: initial;
+        right: initial;
+        left: -12px;
+        transform: translateX(-50%) rotate(90deg);
+      }
+      &-bottom {
+        bottom: 12px;
+        right: initial;
+        left: -12px;
+        transform: translateX(-50%) rotate(90deg);
+      }
+    }
+  }
+}

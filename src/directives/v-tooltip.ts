@@ -1,25 +1,106 @@
 import { DirectiveBinding } from "vue";
+import { positions } from "@/constants/positions";
 
 const scrollHandlers: Record<string, () => void> = {};
+
+let prevTooltip: HTMLDivElement | null = null;
 
 const TooltipDirective = {
   mounted(el: HTMLElement, binding: DirectiveBinding<any>) {
     const options = binding.value || {};
-    const { content, scrollClassName, useClick } = options;
-
-    if (!content) {
-      console.error("Tooltip content is missing.");
-      return;
-    }
+    const { content, scrollClassName, useClick, positionClass } = options;
 
     let tooltip: HTMLDivElement | null = null;
-
     const updateTooltipPosition = () => {
       if (tooltip) {
         const rect = el.getBoundingClientRect();
         const scrollY = window.scrollY || window.pageYOffset;
-        tooltip.style.top = `${rect.bottom + scrollY}px`;
-        tooltip.style.left = `${rect.left + window.scrollX}px`;
+        const gap = 25;
+        const tenPercentHeight = (tooltip.clientHeight / 100) * 13;
+        const tenPercentWidth = (tooltip.clientWidth / 100) * 8;
+
+        let top, left;
+        switch (positionClass) {
+          case positions.TopLeft:
+            top = rect.top + scrollY - tooltip.clientHeight - gap;
+            left = rect.left - tenPercentWidth + window.scrollX;
+            break;
+          case positions.TopCenter:
+            top = rect.top + scrollY - tooltip.clientHeight - gap;
+            left =
+              rect.left +
+              window.scrollX +
+              rect.width / 2 -
+              tooltip.clientWidth / 2;
+            break;
+          case positions.TopRight:
+            top = rect.top + scrollY - tooltip.clientHeight - gap;
+            left =
+              rect.right -
+              tooltip.clientWidth +
+              tenPercentWidth +
+              window.scrollX;
+            break;
+          case positions.BottomLeft:
+            top = rect.bottom + scrollY + gap;
+            left = rect.left - tenPercentWidth + window.scrollX;
+            break;
+          case positions.BottomCenter:
+            top = rect.bottom + scrollY + gap;
+            left =
+              rect.left +
+              window.scrollX +
+              rect.width / 2 -
+              tooltip.clientWidth / 2;
+            break;
+          case positions.BottomRight:
+            top = rect.bottom + scrollY + gap;
+            left =
+              rect.right -
+              tooltip.clientWidth +
+              tenPercentWidth +
+              window.scrollX;
+            break;
+          case positions.LeftTop:
+            top = rect.top + scrollY - tenPercentHeight;
+            left = rect.left + window.scrollX - tooltip.clientWidth - gap;
+            break;
+          case positions.LeftCenter:
+            top =
+              rect.top + scrollY + rect.height / 2 - tooltip.clientHeight / 2;
+            left = rect.left + window.scrollX - tooltip.clientWidth - gap;
+            break;
+          case positions.LeftBottom:
+            top =
+              rect.bottom + scrollY - tooltip.clientHeight + tenPercentHeight;
+            left = rect.left + window.scrollX - tooltip.clientWidth - gap;
+            break;
+          case positions.RightTop:
+            top = rect.top + scrollY - tenPercentHeight;
+            left = rect.right + window.scrollX + gap;
+            break;
+          case positions.RightCenter:
+            top =
+              rect.top + scrollY + rect.height / 2 - tooltip.clientHeight / 2;
+            left = rect.right + window.scrollX + gap;
+            break;
+          case positions.RightBottom:
+            top =
+              rect.bottom + scrollY - tooltip.clientHeight + tenPercentHeight;
+            left = rect.right + window.scrollX + gap;
+            break;
+          default:
+            top = rect.top + scrollY - tooltip.clientHeight - gap;
+            left =
+              rect.left +
+              window.scrollX +
+              rect.width / 2 -
+              tooltip.clientWidth / 2;
+            break;
+        }
+
+        tooltip.style.top = `${top}px`;
+        tooltip.style.left = `${left}px`;
       }
     };
 
@@ -27,11 +108,23 @@ const TooltipDirective = {
       if (!tooltip) {
         tooltip = document.createElement("div");
         tooltip.className = "custom-tooltip";
-        tooltip.textContent = content;
+        tooltip.innerHTML = `
+          <div class="custom-tooltip--arrow ${positionClass}"></div>
+          <div class="custom-tooltip--content">${content}</div>`;
         document.body.appendChild(tooltip);
         updateTooltipPosition();
       }
-      tooltip.style.visibility = "visible";
+
+      if (tooltip.style.visibility === "visible") {
+        hideTooltip();
+      } else {
+        tooltip.style.visibility = "visible";
+        if (prevTooltip && prevTooltip !== tooltip) {
+          prevTooltip!.style.visibility = "hidden";
+          prevTooltip = null;
+        }
+      }
+      prevTooltip = tooltip;
     };
 
     const hideTooltip = () => {
@@ -40,20 +133,15 @@ const TooltipDirective = {
       }
     };
 
-    const toggleTooltip = () => {
-      if (tooltip && tooltip.style.visibility === "visible") {
-        hideTooltip();
-      } else {
-        showTooltip();
-      }
-    };
-
     if (useClick) {
       el.addEventListener("click", (event) => {
         event.stopPropagation();
-        toggleTooltip();
+        if (prevTooltip && !tooltip) {
+          prevTooltip!.style.visibility = "hidden";
+          prevTooltip = null;
+        }
+        showTooltip();
       });
-
       document.body.addEventListener("click", (event) => {
         if (tooltip && !tooltip.contains(event.target as Node)) {
           hideTooltip();
@@ -77,8 +165,8 @@ const TooltipDirective = {
         if (contentBlock) {
           const contentRect = contentBlock.getBoundingClientRect();
           if (
-            tooltipRect.bottom < contentRect.top ||
-            tooltipRect.top > contentRect.bottom
+            tooltipRect.bottom - 20 < contentRect.top ||
+            tooltipRect.top - 20 > contentRect.bottom
           ) {
             hideTooltip();
           }
@@ -99,7 +187,6 @@ const TooltipDirective = {
     if (tooltip) {
       tooltip.remove();
     }
-
     const contentEl = el.closest(scrollClassName);
     if (contentEl && scrollHandlers[el.dataset.tooltipId!]) {
       contentEl.removeEventListener(

@@ -2,6 +2,7 @@
 @import "core/_reset";
 @import "core/_fonts";
 @import "core/_media";
+@import "tooltip";
 
 html,
 body,
@@ -14,21 +15,6 @@ body.no-scroll {
   overflow: hidden;
 }
 
-.custom-tooltip {
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 5px;
-  border-radius: 4px;
-  font-size: 14px;
-  max-width: 200px;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  z-index: 9999;
-}
-
 
 .label-inter {
   font-family: Inter;
@@ -39,87 +25,6 @@ body.no-scroll {
   white-space: nowrap;
 
   color: var(--black);
-}
-
-.tooltip--info-arrow {
-  &.bottom {
-    &-left {
-      left: 10%;
-      top: 100%;
-      transform: translateX(-50%);
-    }
-    &-center {
-      left: 50%;
-      top: 100%;
-      transform: translateX(-50%);
-    }
-    &-right {
-      left: 90%;
-      top: 100%;
-      transform: translateX(-50%);
-    }
-  }
-  &.top {
-    &-left {
-      left: 10%;
-      top: -25px;
-      transform: translateX(-50%) rotate(180deg);
-    }
-    &-center {
-      left: 50%;
-      top: -25px;
-      transform: translateX(-50%) rotate(180deg);
-    }
-    &-right {
-      left: 90%;
-      top: -25px;
-      transform: translateX(-50%) rotate(180deg);
-    }
-  }
-  &.left {
-    &-top {
-      top: 10%;
-      bottom: initial;
-      right: initial;
-      left: calc(100% + 12px);
-      transform: translateX(-50%) rotate(-90deg);
-    }
-    &-center {
-      top: calc(50% - 12px);
-      bottom: initial;
-      right: initial;
-      left: calc(100% + 12px);
-      transform: translateX(-50%) rotate(-90deg);
-    }
-    &-bottom {
-      bottom: 12px;
-      right: initial;
-      left: calc(100% + 12px);
-      transform: translateX(-50%) rotate(-90deg);
-    }
-  }
-  &.right {
-    &-top {
-      top: 10%;
-      bottom: initial;
-      right: initial;
-      left: -12px;
-      transform: translateX(-50%) rotate(90deg);
-    }
-    &-center {
-      top: calc(50% - 12px);
-      bottom: initial;
-      right: initial;
-      left: -12px;
-      transform: translateX(-50%) rotate(90deg);
-    }
-    &-bottom {
-      bottom: 12px;
-      right: initial;
-      left: -12px;
-      transform: translateX(-50%) rotate(90deg);
-    }
-  }
 }
 
 i.icon {
