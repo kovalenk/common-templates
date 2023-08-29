@@ -25,14 +25,12 @@ const $v = useVuelidate(rules, form, { $lazy: true, $autoDirty: true });
     :value="form.input",
     @input="form.input = $event",
     name="Label",
-    placeholder="Placeholder",
-    :is-suffix="false",
-    :is-prefix="true"
+    placeholder="Placeholder"
   )
     template(v-slot:label)
       | Label
     template(v-slot:errors)
-      | {{ $v.input.$errors.length ? $v.input.$errors[0] : "" }}
+      | {{ $v.input.$errors.length ? $v.input.$errors[0].$message : "" }}
 </template>
 
 <style scoped lang="scss">

@@ -2,18 +2,17 @@
 .custom--input(:class="{ error: isError, disabled: isDisabled }")
   label(:for="id")
     slot(name="label")
-  .custom--input--field(:class="{ prefix: isPrefix, suffix: isSuffix }")
-    .prefix(v-if="isPrefix")
-      slot(name="prefix")
+  .custom--input--field
+    slot(name="prefix")
     input(
       :id="id",
       :placeholder="placeholder",
-      :name="name",
       :disabled="isDisabled",
+      :type="type",
+      :value="value",
       v-model="input"
     )
-    .suffix(v-if="isSuffix")
-      slot(name="suffix")
+    slot(name="suffix")
   .custom--input--errors(v-if="isError")
     slot(name="errors")
 </template>
@@ -33,14 +32,6 @@ const props = defineProps({
     type: Boolean,
     default: () => false,
   },
-  isPrefix: {
-    type: Boolean,
-    default: () => false,
-  },
-  isSuffix: {
-    type: Boolean,
-    default: () => false,
-  },
   isDisabled: {
     type: Boolean,
     default: () => false,
@@ -52,6 +43,10 @@ const props = defineProps({
   value: {
     default: () => "",
     required: true,
+  },
+  type: {
+    default: () => "text",
+    type: String,
   },
 });
 
@@ -75,7 +70,7 @@ watch(input, () => {
 
   width: 100%;
 
-  font-family: inherit;
+  font-family: var(--font-inter);
   background: transparent;
 
   label {
@@ -94,35 +89,6 @@ watch(input, () => {
     width: 100%;
 
     overflow: hidden;
-
-    &.suffix {
-      input {
-        padding-right: 42px;
-      }
-    }
-    &.prefix {
-      input {
-        padding-left: 42px;
-      }
-    }
-
-    .suffix,
-    .prefix {
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      min-height: 16px;
-      min-width: 16px;
-      background: black;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    .prefix {
-      left: 18px;
-    }
-    .suffix {
-      right: 18px;
-    }
 
     input {
       display: flex;
