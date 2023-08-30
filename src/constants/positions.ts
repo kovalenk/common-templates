@@ -1,4 +1,4 @@
-export enum positions {
+export enum Positions {
   TopLeft = "top-left",
   TopCenter = "top-center",
   TopRight = "top-right",
