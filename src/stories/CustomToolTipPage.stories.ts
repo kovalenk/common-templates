@@ -11,7 +11,8 @@ const meta: Meta<typeof CustomToolTipPage> = {
       description: "Whether the tooltip should appear on click.",
     },
     position: {
-      description: Object.values(Positions).join(", "),
+      control: "select",
+      options: Object.values(Positions),
     },
   },
   parameters: {
