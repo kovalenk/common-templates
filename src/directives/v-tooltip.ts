@@ -15,7 +15,8 @@ enum events {
 const vTooltip = {
   mounted(el: HTMLElement, binding: DirectiveBinding<any>) {
     const options = binding.value || {};
-    const { scrollClassName, useClick, positionClass, tooltip } = options;
+    const { scrollClassName, useClick, tooltip, positionClass } = options;
+    let newPosition = options.positionClass;
 
     const updateTooltipPosition = () => {
       if (tooltip) {
@@ -25,93 +26,126 @@ const vTooltip = {
         const tenPercentHeight = (tooltip.clientHeight / 100) * 13;
         const tenPercentWidth = (tooltip.clientWidth / 100) * 8;
 
-        let top, left;
-        switch (positionClass) {
-          case Positions.TopLeft:
-            top = rect.top + scrollY - tooltip.clientHeight - gap;
-            left = rect.left - tenPercentWidth + window.scrollX;
-            break;
-          case Positions.TopCenter:
-            top = rect.top + scrollY - tooltip.clientHeight - gap;
-            left =
-              rect.left +
-              window.scrollX +
-              rect.width / 2 -
-              tooltip.clientWidth / 2;
-            break;
-          case Positions.TopRight:
-            top = rect.top + scrollY - tooltip.clientHeight - gap;
-            left =
-              rect.right -
-              tooltip.clientWidth +
-              tenPercentWidth +
-              window.scrollX;
-            break;
-          case Positions.BottomLeft:
-            top = rect.bottom + scrollY + gap;
-            left = rect.left - tenPercentWidth + window.scrollX;
-            break;
-          case Positions.BottomCenter:
-            top = rect.bottom + scrollY + gap;
-            left =
-              rect.left +
-              window.scrollX +
-              rect.width / 2 -
-              tooltip.clientWidth / 2;
-            break;
-          case Positions.BottomRight:
-            top = rect.bottom + scrollY + gap;
-            left =
-              rect.right -
-              tooltip.clientWidth +
-              tenPercentWidth +
-              window.scrollX;
-            break;
-          case Positions.LeftTop:
-            top = rect.top + scrollY - tenPercentHeight;
-            left = rect.left + window.scrollX - tooltip.clientWidth - gap;
-            break;
-          case Positions.LeftCenter:
-            top =
-              rect.top + scrollY + rect.height / 2 - tooltip.clientHeight / 2;
-            left = rect.left + window.scrollX - tooltip.clientWidth - gap;
-            break;
-          case Positions.LeftBottom:
-            top =
-              rect.bottom + scrollY - tooltip.clientHeight + tenPercentHeight;
-            left = rect.left + window.scrollX - tooltip.clientWidth - gap;
-            break;
-          case Positions.RightTop:
-            top = rect.top + scrollY - tenPercentHeight;
-            left = rect.right + window.scrollX + gap;
-            break;
-          case Positions.RightCenter:
-            top =
-              rect.top + scrollY + rect.height / 2 - tooltip.clientHeight / 2;
-            left = rect.right + window.scrollX + gap;
-            break;
-          case Positions.RightBottom:
-            top =
-              rect.bottom + scrollY - tooltip.clientHeight + tenPercentHeight;
-            left = rect.right + window.scrollX + gap;
-            break;
-          default:
-            top = rect.top + scrollY - tooltip.clientHeight - gap;
-            left =
-              rect.left +
-              window.scrollX +
-              rect.width / 2 -
-              tooltip.clientWidth / 2;
-            break;
+        let top = 0;
+        let left = 0;
+        const tooltipRect = tooltip.getBoundingClientRect();
+        const positionsSwitch = (positionClassName: string) => {
+          switch (positionClassName) {
+            case Positions.TopLeft:
+              top = rect.top + scrollY - tooltip.clientHeight - gap;
+              left = rect.left - tenPercentWidth + window.scrollX;
+              break;
+            case Positions.TopCenter:
+              top = rect.top + scrollY - tooltip.clientHeight - gap;
+              left =
+                rect.left +
+                window.scrollX +
+                rect.width / 2 -
+                tooltip.clientWidth / 2;
+              break;
+            case Positions.TopRight:
+              top = rect.top + scrollY - tooltip.clientHeight - gap;
+              left =
+                rect.right -
+                tooltip.clientWidth +
+                tenPercentWidth +
+                window.scrollX;
+              break;
+            case Positions.BottomLeft:
+              top = rect.bottom + scrollY + gap;
+              left = rect.left - tenPercentWidth + window.scrollX;
+              break;
+            case Positions.BottomCenter:
+              top = rect.bottom + scrollY + gap;
+              left =
+                rect.left +
+                window.scrollX +
+                rect.width / 2 -
+                tooltip.clientWidth / 2;
+              break;
+            case Positions.BottomRight:
+              top = rect.bottom + scrollY + gap;
+              left =
+                rect.right -
+                tooltip.clientWidth +
+                tenPercentWidth +
+                window.scrollX;
+              break;
+            case Positions.LeftTop:
+              top = rect.top + scrollY - tenPercentHeight;
+              left = rect.left + window.scrollX - tooltip.clientWidth - gap;
+              break;
+            case Positions.LeftCenter:
+              top =
+                rect.top + scrollY + rect.height / 2 - tooltip.clientHeight / 2;
+              left = rect.left + window.scrollX - tooltip.clientWidth - gap;
+              break;
+            case Positions.LeftBottom:
+              top =
+                rect.bottom + scrollY - tooltip.clientHeight + tenPercentHeight;
+              left = rect.left + window.scrollX - tooltip.clientWidth - gap;
+              break;
+            case Positions.RightTop:
+              top = rect.top + scrollY - tenPercentHeight;
+              left = rect.right + window.scrollX + gap;
+              break;
+            case Positions.RightCenter:
+              top =
+                rect.top + scrollY + rect.height / 2 - tooltip.clientHeight / 2;
+              left = rect.right + window.scrollX + gap;
+              break;
+            case Positions.RightBottom:
+              top =
+                rect.bottom + scrollY - tooltip.clientHeight + tenPercentHeight;
+              left = rect.right + window.scrollX + gap;
+              break;
+            default:
+              top = rect.top + scrollY - tooltip.clientHeight - gap;
+              left =
+                rect.left +
+                window.scrollX +
+                rect.width / 2 -
+                tooltip.clientWidth / 2;
+              break;
+          }
+        };
+        positionsSwitch(positionClass);
+
+        const isPositionWithinScreen = () => {
+          return (
+            top >= 0 &&
+            top + tooltipRect.height <= window.innerHeight &&
+            left >= 0 &&
+            left + tooltipRect.width <= window.innerWidth
+          );
+        };
+
+        if (!isPositionWithinScreen()) {
+          Object.values(Positions).forEach((el: string) => {
+            if (positionClass !== el) {
+              positionsSwitch(el);
+              if (isPositionWithinScreen()) {
+                newPosition = el;
+                tooltip.style.top = `${top}px`;
+                tooltip.style.left = `${left}px`;
+                return;
+              }
+            }
+          });
+        } else {
+          newPosition = positionClass;
+          tooltip.style.top = `${top}px`;
+          tooltip.style.left = `${left}px`;
         }
 
-        tooltip.style.top = `${top}px`;
-        tooltip.style.left = `${left}px`;
+        const arrow = tooltip.querySelector(".custom-tooltip--arrow");
+        if (arrow) {
+          arrow.classList.replace(arrow.classList[1], newPosition);
+        }
       }
     };
 
     const showTooltip = () => {
-      console.log(binding.value);
       if (tooltip) {
         updateTooltipPosition();
         if (tooltip.style.visibility === "visible") {
