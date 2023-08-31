@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, defineProps } from "vue";
-import vTooltip from "@/directives/v-tooltip";
+import { ref, defineProps, computed } from "vue";
+import vTooltip from "../directives/v-tooltip";
+import { Positions } from "../constants/positions";
 
 const props = defineProps({
   scrollClassName: {
@@ -13,7 +14,7 @@ const props = defineProps({
   },
   position: {
     type: String,
-    required: true,
+    default: Positions.TopLeft,
   },
 });
 

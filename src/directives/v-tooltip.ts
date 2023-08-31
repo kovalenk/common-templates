@@ -1,5 +1,5 @@
 import { DirectiveBinding } from "vue";
-import { Positions } from "@/constants/positions";
+import { Positions } from "../constants/positions";
 
 const scrollHandlers: Record<string, () => void> = {};
 
@@ -111,6 +111,7 @@ const vTooltip = {
     };
 
     const showTooltip = () => {
+      console.log(binding.value);
       if (tooltip) {
         updateTooltipPosition();
         if (tooltip.style.visibility === "visible") {
