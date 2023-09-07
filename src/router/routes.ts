@@ -28,6 +28,12 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  {
+    path: "/form",
+    name: "Form",
+    component: () =>
+      import(/* webpackChunkName: "registration" */ "../views/FormView.vue"),
+  },
 ];
 
 export default routes;
