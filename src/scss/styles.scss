@@ -117,4 +117,8 @@ i.icon {
   &.icon-search {
     mask-image: url("../assets/Info.svg");
   }
+  &.icon-arrow {
+    mask-image: url("../assets/arrow.svg");
+    background-color: #FFFFFF;
+  }
 }
