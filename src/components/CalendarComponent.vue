@@ -105,24 +105,18 @@ const isDateInRange = (date) => {
 };
 
 const daysOfWeek = computed(() => ["вс", "пн", "вт", "ср", "чт", "пт", "сб"]);
-const isPastDate = (date: any) => date && date.isBefore(dayjs(), "day");
 
 const formattedCurrentMonth = computed(() =>
   currentMonth.value.format("MMMM YYYY")
 );
 
-const formatDate = (date: any) => (date ? date.format("D") : "");
+const formatDate = (date: object) => (date ? date.format("D") : "");
 
-const isToday = (date: any) => date && date.isSame(dayjs(), "day");
+const isToday = (date: object) => date && date.isSame(dayjs(), "day");
 
-const isPreviousMonth = (date: any, currentMonth: any) => {
-  const previousMonth = currentMonth.subtract(1, "month");
-  return date.isBefore(previousMonth, "month");
-};
+const isBeforeCurrentDay = (date: object) => date.isBefore(dayjs(), "day");
 
-const isBeforeCurrentDay = (date: any) => date.isBefore(dayjs(), "day");
-
-const isNextMonth = (date: any, currentMonth: any) => {
+const isNextMonth = (date: object, currentMonth: string) => {
   const nextMonth = currentMonth.add(1, "month");
   return date.isSame(nextMonth, "month");
 };
@@ -135,7 +129,7 @@ const nextMonth = () => {
   currentMonth.value = currentMonth.value.add(1, "month");
 };
 
-const selectDate = (date) => {
+const selectDate = (date: object) => {
   const formattedDate = date.format("DD.MM.YYYY");
 
   if (props.twoDate) {
@@ -173,24 +167,21 @@ const weeks = computed(() => {
 
   const weeks = [];
   let currentWeek = [];
-  for (
-    let i = daysInPreviousMonth - startOfMonth + 1;
-    i <= daysInPreviousMonth;
-    i++
-  ) {
-    currentWeek.push({ date: previousMonth.date(i) });
-  }
-  for (let day = 1; day <= daysInMonth; day++) {
-    currentWeek.push({ date: firstDayOfMonth.date(day) });
+
+  Array.from({ length: startOfMonth }, (_, i) => {
+    currentWeek.push({ date: previousMonth.date(i + 1) });
+  });
+  Array.from({ length: daysInMonth }, (_, i) => {
+    currentWeek.push({ date: firstDayOfMonth.date(i + 1) });
 
     if (currentWeek.length === 7) {
       weeks.push(currentWeek);
       currentWeek = [];
     }
-  }
-  for (let day = 1; currentWeek.length < 7; day++) {
-    currentWeek.push({ date: nextMonth.date(day) });
-  }
+  });
+  Array.from({ length: 7 - currentWeek.length }, (_, i) => {
+    currentWeek.push({ date: nextMonth.date(i + 1) });
+  });
 
   weeks.push(currentWeek);
 
@@ -220,6 +211,7 @@ const weeks = computed(() => {
     margin-bottom: 8px;
   }
   input {
+    cursor: pointer;
     position: relative;
     width: 246px;
     height: 22px;
@@ -320,6 +312,7 @@ const weeks = computed(() => {
     line-height: 20px;
     padding: 10px;
     position: relative;
+    cursor: pointer;
     &.today {
       color: #f98347;
     }
@@ -350,7 +343,7 @@ const weeks = computed(() => {
   .start {
     color: white;
     border-radius: 21px;
-    background: var(--primary-primary, #f98347) !important;
+    background: var(--primary-primary, #f98347);
     width: 37px;
     height: 40px;
     position: absolute;
@@ -363,7 +356,7 @@ const weeks = computed(() => {
   .end {
     color: white;
     border-radius: 21px;
-    background: var(--primary-primary, #f98347) !important;
+    background: var(--primary-primary, #f98347);
     width: 37px;
     height: 40px;
     position: absolute;
