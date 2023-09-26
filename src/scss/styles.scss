@@ -25,6 +25,14 @@ body.no-scroll {
   color: var(--black);
 }
 
+input {
+  border: none;
+  padding: 0;
+  &:focus-visible {
+    outline: none;
+  }
+}
+
 .tooltip--info-arrow {
   &.bottom {
     &-left {
