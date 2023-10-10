@@ -1,65 +1,72 @@
 <template lang="pug">
 #table-section.table-section
-  .table-item(v-for="item in items") 
+  .table-item(v-for="item in items")
     label.label-inter {{ item.label }}
-    custom-tool-tip(:class="[item.class]", :is-click="true")
+    custom-tool-tip(
+      :position="item.class",
+      :scroll-class-name="'.right-content'",
+      :is-click="true"
+    )
       template(v-slot:item="")
-        .table-item--content
-          i.icon.icon-search
+        i.icon.icon-search
       template(v-slot:content="")
-        .table-item--name.label-inter {{ " In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available." }}
+        | {{ text }}
 </template>
 
 <script setup lang="ts">
 import CustomToolTip from "@/components/CustomToolTip.vue";
+import { Positions } from "@/constants/positions";
+
+const text =
+  " In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.";
 const items = [
   {
     label: "Top, Left",
-    class: "top-left",
+    class: Positions.TopLeft,
   },
   {
     label: "Top, Center",
-    class: "top-center",
+    class: Positions.TopCenter,
   },
   {
     label: "Top, Right",
-    class: "top-right",
+    class: Positions.TopRight,
   },
   {
     label: "Bottom, Left",
-    class: "bottom-left",
+    class: Positions.BottomLeft,
   },
   {
     label: "Bottom, Center",
-    class: "bottom-center",
+    class: Positions.BottomCenter,
   },
   {
     label: "Bottom, Right",
-    class: "bottom-right",
+    class: Positions.BottomRight,
   },
   {
     label: "Left, Bottom",
-    class: "left-bottom",
+    class: Positions.LeftBottom,
   },
   {
     label: "Left, Center",
-    class: "left-center",
+    class: Positions.LeftCenter,
   },
   {
     label: "Left, Top",
-    class: "left-top",
+    class: Positions.LeftTop,
   },
   {
     label: "Right, Bottom",
-    class: "right-bottom",
+    class: Positions.RightBottom,
   },
   {
     label: "Right, Center",
-    class: "right-center",
+    class: Positions.RightCenter,
   },
   {
     label: "Right, Top",
-    class: "right-top",
+    class: Positions.RightTop,
   },
 ];
 </script>
@@ -67,7 +74,7 @@ const items = [
 <style scoped lang="scss">
 .table {
   &-section {
-    margin-top: 100px;
+    margin: 100px 0;
     display: flex;
     flex-wrap: wrap;
 
