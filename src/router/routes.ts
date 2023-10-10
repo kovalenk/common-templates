@@ -26,6 +26,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () =>
           import(/* webpackChunkName: "ModalPage" */ "../views/ModalPage.vue"),
       },
+      {
+        path: "/input",
+        name: "Input",
+        component: () =>
+          import(/* webpackChunkName: "InputPage" */ "../views/InputPage.vue"),
+      },
     ],
   },
 ];

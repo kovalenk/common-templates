@@ -24,6 +24,11 @@ const sideComponent = [
     name: "Modal",
     path: "modal",
   },
+  {
+    img: "input",
+    name: "Input",
+    path: "input",
+  },
 ];
 </script>
 
