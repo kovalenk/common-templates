@@ -26,6 +26,14 @@ const routes: Array<RouteRecordRaw> = [
         component: () =>
           import(/* webpackChunkName: "ModalPage" */ "../views/ModalPage.vue"),
       },
+      {
+        path: "/calendar",
+        name: "Calendar",
+        component: () =>
+          import(
+            /* webpackChunkName: "Calendar" */ "../views/CalendarPage.vue"
+          ),
+      },
     ],
   },
 ];
